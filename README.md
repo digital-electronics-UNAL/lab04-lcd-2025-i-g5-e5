@@ -3,6 +3,7 @@
 
 # Integrantes
 
+[David Chaparro]()
 
 # Informe
 

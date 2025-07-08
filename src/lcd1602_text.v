@@ -27,7 +27,6 @@ reg clk_16ms;
 localparam CLEAR_DISPLAY = 8'h01;
 localparam SHIFT_CURSOR_RIGHT = 8'h06;
 localparam DISPON_CURSOROFF = 8'h0C;
-localparam DISPON_CURSORBLINK = 8'h0E;
 localparam LINES2_MATRIX5x8_MODE8bit = 8'h38;
 localparam START_2LINE = 8'hC0;
 
@@ -42,6 +41,8 @@ reg [$clog2(NUM_DATA_PERLINE):0] data_counter;
 reg [DATA_BITS-1:0] static_data_mem [0: NUM_DATA_ALL-1];
 reg [DATA_BITS-1:0] config_mem [0:NUM_COMMANDS-1]; 
 
+
+
 initial begin
     fsm_state <= IDLE;
     command_counter <= 'b0;
@@ -51,7 +52,7 @@ initial begin
     data <= 8'b0;
     clk_16ms <= 1'b0;
     clk_counter <= 'b0;
-    $readmemh("path_to_txt.txt", static_data_mem);    
+    $readmemh("/home/david/github-classroom/digital-electronics-UNAL/lab04-lcd-2025-i-g5-e5/src/data.txt", static_data_mem);    
 	config_mem[0] <= LINES2_MATRIX5x8_MODE8bit;
 	config_mem[1] <= SHIFT_CURSOR_RIGHT;
 	config_mem[2] <= DISPON_CURSOROFF;
@@ -102,7 +103,7 @@ always @(posedge clk_16ms) begin
         command_counter <= 'b0;
         data_counter <= 'b0;
 		  data <= 'b0;
-        $readmemh("path_to_txt.txt", static_data_mem);
+        $readmemh("/home/david/github-classroom/digital-electronics-UNAL/lab04-lcd-2025-i-g5-e5/src/data.txt", static_data_mem);
     end else begin
         case (next_state)
             IDLE: begin
